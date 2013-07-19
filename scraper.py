@@ -16,7 +16,7 @@ def query(ind):
 	card_name = get_card_name(money)
 	card_desc = get_card_desc(money)
 	
-	return card_desc
+	return card_name, card_desc
 
 def get_card_name(html):
 	m = html.find('b')
@@ -34,10 +34,25 @@ def get_card_desc(html):
 def get_query_url(ind):
 	return base_url + str(ind)
 
+def write_to_file(cardname, desc):
+	with open ('tarots.md', 'a') as f:
+		f.write(cardname)
+		for i in desc:
+			f.write(i + '\n')
+		f.write('\n')
+
+
+
+
 i = 0
 #while i < 78:
 while i < 3:
-	print(query(i))
+	try:
+		cardname, desc = query(i)
+		write_to_file(cardname, desc)
+		print('got ' + cardname)
+	except:
+		print('failed? on ' + str(i))
 	i+=1
 
 
