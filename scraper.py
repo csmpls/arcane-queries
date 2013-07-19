@@ -21,14 +21,16 @@ def query(ind):
 def get_card_name(html):
 	m = html.find('b')
 	name = m.contents[0]
-	name = name.split(r' ', 1)[1]
 	return name
 
 def get_card_desc(html):
 	m = html.findAll('p')
 	desc = []	
 	for i in m:
-		desc.append(i.contents[0])
+		try:
+			desc.append(i.contents[0])
+		except:
+			pass
 	return desc
 
 def get_query_url(ind):
@@ -44,15 +46,11 @@ def write_to_file(cardname, desc):
 
 
 
-i = 0
-#while i < 78:
-while i < 3:
-	try:
-		cardname, desc = query(i)
-		write_to_file(cardname, desc)
-		print('got ' + cardname)
-	except:
-		print('failed? on ' + str(i))
+i = 0 
+while i < 78:
+	cardname, desc = query(i)
+	write_to_file(cardname, desc)
+	print('got ' + cardname)
 	i+=1
 
 
